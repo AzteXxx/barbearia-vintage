@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barbearia Vintage | Cortes e Barba</title>
+  <meta name="description" content="Barbearia Vintage: corte, barba e atendimento com hora marcada. Agende pelo WhatsApp.">
+  <style>
+    :root {
+      --bg: #121212;
+      --bg-alt: #1b1b1b;
+      --card: #222;
+      --text: #f2f2f2;
+      --muted: #a8a8a8;
+      --gold: #c9a24b;
+      --gold-dark: #a6832f;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1100px, 92%); margin: 0 auto; }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(18,18,18,.95);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; }
+    .logo { font-size: 1.3rem; font-weight: 700; letter-spacing: 2px; color: var(--gold); }
+    .nav ul { display: flex; gap: 22px; list-style: none; }
+    .nav ul a { color: var(--muted); font-size: .95rem; transition: color .2s; }
+    .nav ul a:hover { color: var(--gold); }
+
+    /* Buttons */
+    .btn {
+      display: inline-block; padding: 14px 28px; border-radius: 6px;
+      background: var(--gold); color: #111; font-weight: 700; border: none;
+      cursor: pointer; font-size: 1rem; transition: background .2s, transform .2s;
+    }
+    .btn:hover { background: var(--gold-dark); transform: translateY(-2px); }
+    .btn-outline { background: transparent; color: var(--gold); border: 2px solid var(--gold); }
+    .btn-outline:hover { background: var(--gold); color: #111; }
+
+    /* Hero */
+    .hero {
+      min-height: 85vh; display: flex; align-items: center; text-align: center;
+      background:
+        linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.8)),
+        repeating-linear-gradient(45deg, #1a1a1a 0 20px, #151515 20px 40px);
+    }
+    .hero h1 { font-size: clamp(2.2rem, 6vw, 4rem); line-height: 1.15; margin-bottom: 16px; }
+    .hero h1 span { color: var(--gold); }
+    .hero p { color: var(--muted); max-width: 560px; margin: 0 auto 30px; font-size: 1.1rem; }
+    .hero .actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    /* Sections */
+    section { padding: 80px 0; }
+    section.alt { background: var(--bg-alt); }
+    .title { text-align: center; margin-bottom: 44px; }
+    .title h2 { font-size: 2rem; margin-bottom: 8px; }
+    .title h2::after {
+      content: ""; display: block; width: 60px; height: 3px;
+      background: var(--gold); margin: 12px auto 0;
+    }
+    .title p { color: var(--muted); }
+
+    /* Services */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; }
+    .service {
+      background: var(--card); padding: 28px; border-radius: 10px;
+      border: 1px solid #2c2c2c; transition: transform .2s, border-color .2s;
+    }
+    .service:hover { transform: translateY(-5px); border-color: var(--gold); }
+    .service .icon { font-size: 2rem; margin-bottom: 10px; }
+    .service h3 { margin-bottom: 6px; }
+    .service p { color: var(--muted); font-size: .95rem; margin-bottom: 14px; }
+    .price { color: var(--gold); font-size: 1.3rem; font-weight: 700; }
+
+    /* Gallery */
+    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+    .shot {
+      aspect-ratio: 1; border-radius: 10px; display: flex; align-items: flex-end;
+      padding: 14px; font-weight: 600; color: #fff;
+      background: linear-gradient(135deg, #2b2b2b, #3a3a3a);
+      border: 1px solid #333;
+    }
+    .shot:nth-child(2) { background: linear-gradient(135deg, #3a2f1a, #5a4620); }
+    .shot:nth-child(4) { background: linear-gradient(135deg, #1f2a33, #2f4252); }
+    .shot:nth-child(5) { background: linear-gradient(135deg, #33201f, #522f2c); }
+    .note { text-align: center; color: var(--muted); font-size: .85rem; margin-top: 14px; }
+
+    /* Booking */
+    .booking {
+      max-width: 520px; margin: 0 auto; background: var(--card);
+      padding: 32px; border-radius: 12px; border: 1px solid #2c2c2c;
+    }
+    .field { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; font-size: .9rem; color: var(--muted); }
+    input, select {
+      width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #3a3a3a;
+      background: #161616; color: var(--text); font-size: 1rem;
+    }
+    input:focus, select:focus { outline: 2px solid var(--gold); border-color: transparent; }
+    .booking .btn { width: 100%; }
+    .error { color: #ff7a7a; font-size: .85rem; margin-top: 4px; min-height: 1em; }
+
+    /* Contact */
+    .contact { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; align-items: start; }
+    .info p { margin-bottom: 12px; color: var(--muted); }
+    .info strong { color: var(--text); }
+    .map {
+      border-radius: 10px; overflow: hidden; border: 1px solid #333; min-height: 280px;
+    }
+    .map iframe { width: 100%; height: 100%; min-height: 280px; border: 0; filter: grayscale(.6) invert(.9) contrast(.9); }
+
+    footer { text-align: center; padding: 28px 0; color: var(--muted); font-size: .9rem; border-top: 1px solid #2a2a2a; }
+
+    /* Floating WhatsApp */
+    .wpp {
+      position: fixed; right: 18px; bottom: 18px; background: #25d366; color: #fff;
+      width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; font-size: 1.7rem; box-shadow: 0 6px 18px rgba(0,0,0,.4);
+      z-index: 20; transition: transform .2s;
+    }
+    .wpp:hover { transform: scale(1.1); }
+
+    @media (max-width: 640px) {
+      .nav ul { display: none; }
+      section { padding: 56px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container nav">
+      <a href="#inicio" class="logo">✂ VINTAGE</a>
+      <ul>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#galeria">Galeria</a></li>
+        <li><a href="#agendar">Agendar</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="container">
+        <h1>Estilo e tradição <br>em cada <span>corte</span></h1>
+        <p>Corte, barba e cuidado de verdade, com hora marcada e sem espera. Agende em menos de um minuto.</p>
+        <div class="actions">
+          <a href="#agendar" class="btn">Agendar horário</a>
+          <a href="#servicos" class="btn btn-outline">Ver serviços</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="servicos" class="alt">
+      <div class="container">
+        <div class="title">
+          <h2>Nossos serviços</h2>
+          <p>Qualidade e acabamento em todos os detalhes</p>
+        </div>
+        <div class="grid">
+          <article class="service">
+            <div class="icon">💈</div>
+            <h3>Corte masculino</h3>
+            <p>Corte na tesoura ou máquina, com lavagem e finalização.</p>
+            <span class="price">R$ 45</span>
+          </article>
+          <article class="service">
+            <div class="icon">🧔</div>
+            <h3>Barba completa</h3>
+            <p>Modelagem com toalha quente, navalha e hidratação.</p>
+            <span class="price">R$ 35</span>
+          </article>
+          <article class="service">
+            <div class="icon">⭐</div>
+            <h3>Corte + Barba</h3>
+            <p>O combo completo pra sair renovado.</p>
+            <span class="price">R$ 70</span>
+          </article>
+          <article class="service">
+            <div class="icon">✨</div>
+            <h3>Sobrancelha e pézinho</h3>
+            <p>Acabamento fino para completar o visual.</p>
+            <span class="price">R$ 15</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="galeria">
+      <div class="container">
+        <div class="title">
+          <h2>Galeria</h2>
+          <p>Alguns dos nossos trabalhos</p>
+        </div>
+        <div class="gallery">
+          <div class="shot">Degradê</div>
+          <div class="shot">Social</div>
+          <div class="shot">Barba desenhada</div>
+          <div class="shot">Navalhado</div>
+          <div class="shot">Corte infantil</div>
+        </div>
+        <p class="note">Substitua estes blocos pelas fotos reais do cliente.</p>
+      </div>
+    </section>
+
+    <section id="agendar" class="alt">
+      <div class="container">
+        <div class="title">
+          <h2>Agende seu horário</h2>
+          <p>Preencha e finalize pelo WhatsApp</p>
+        </div>
+        <form class="booking" id="form" novalidate>
+          <div class="field">
+            <label for="nome">Seu nome</label>
+            <input type="text" id="nome" placeholder="Ex.: João Silva">
+            <div class="error" id="erro-nome"></div>
+          </div>
+          <div class="field">
+            <label for="servico">Serviço</label>
+            <select id="servico">
+              <option value="Corte masculino">Corte masculino - R$ 45</option>
+              <option value="Barba completa">Barba completa - R$ 35</option>
+              <option value="Corte + Barba">Corte + Barba - R$ 70</option>
+              <option value="Sobrancelha e pézinho">Sobrancelha e pézinho - R$ 15</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="data">Data</label>
+            <input type="date" id="data">
+            <div class="error" id="erro-data"></div>
+          </div>
+          <div class="field">
+            <label for="hora">Horário</label>
+            <select id="hora"></select>
+          </div>
+          <button type="submit" class="btn">Agendar pelo WhatsApp</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="contato">
+      <div class="container">
+        <div class="title">
+          <h2>Onde estamos</h2>
+          <p>Venha nos visitar</p>
+        </div>
+        <div class="contact">
+          <div class="info">
+            <p><strong>📍 Endereço:</strong><br>Rua Exemplo, 123 - Centro, São Paulo - SP</p>
+            <p><strong>🕘 Horário:</strong><br>Seg a Sex: 9h às 20h<br>Sábado: 9h às 18h<br>Domingo: fechado</p>
+            <p><strong>📱 WhatsApp:</strong><br>(11) 99999-9999</p>
+            <a class="btn" id="btn-contato" href="#" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+          </div>
+          <div class="map">
+            <iframe
+              title="Mapa da localização"
+              loading="lazy"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=-46.6400%2C-23.5600%2C-46.6200%2C-23.5450&amp;layer=mapnik">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © <span id="ano"></span> Barbearia Vintage. Todos os direitos reservados.
+    </div>
+  </footer>
+
+  <a class="wpp" id="wpp-flutuante" href="#" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">💬</a>
+
+  <script>
+    // ====== CONFIGURAÇÃO: troque pelo número do cliente (DDI + DDD + número, só dígitos) ======
+    const WHATSAPP = "5511999999999";
+
+    // Links diretos pro WhatsApp
+    const msgPadrao = encodeURIComponent("Olá! Vim pelo site e gostaria de mais informações.");
+    const linkBase = `https://wa.me/${WHATSAPP}?text=${msgPadrao}`;
+    document.getElementById("btn-contato").href = linkBase;
+    document.getElementById("wpp-flutuante").href = linkBase;
+
+    // Ano no rodapé
+    document.getElementById("ano").textContent = new Date().getFullYear();
+
+    // Horários disponíveis (de hora em hora)
+    const selectHora = document.getElementById("hora");
+    for (let h = 9; h <= 19; h++) {
+      const texto = String(h).padStart(2, "0") + ":00";
+      const opt = document.createElement("option");
+      opt.value = texto;
+      opt.textContent = texto;
+      selectHora.appendChild(opt);
+    }
+
+    // Data mínima = hoje
+    const inputData = document.getElementById("data");
+    const hoje = new Date();
+    const yyyy = hoje.getFullYear();
+    const mm = String(hoje.getMonth() + 1).padStart(2, "0");
+    const dd = String(hoje.getDate()).padStart(2, "0");
+    inputData.min = `${yyyy}-${mm}-${dd}`;
+
+    // Envio do formulário
+    document.getElementById("form").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const nome = document.getElementById("nome").value.trim();
+      const servico = document.getElementById("servico").value;
+      const data = inputData.value;
+      const hora = selectHora.value;
+
+      const erroNome = document.getElementById("erro-nome");
+      const erroData = document.getElementById("erro-data");
+      erroNome.textContent = "";
+      erroData.textContent = "";
+
+      let valido = true;
+      if (nome.length < 2) {
+        erroNome.textContent = "Informe seu nome.";
+        valido = false;
+      }
+      if (!data) {
+        erroData.textContent = "Escolha uma data.";
+        valido = false;
+      } else {
+        const dia = new Date(data + "T00:00:00").getDay();
+        if (dia === 0) {
+          erroData.textContent = "Fechado aos domingos. Escolha outro dia.";
+          valido = false;
+        }
+      }
+      if (!valido) return;
+
+      const [ano, mes, diaMes] = data.split("-");
+      const dataBR = `${diaMes}/${mes}/${ano}`;
+
+      const mensagem =
+        `Olá! Gostaria de agendar um horário:\n\n` +
+        `Nome: ${nome}\n` +
+        `Serviço: ${servico}\n` +
+        `Data: ${dataBR}\n` +
+        `Horário: ${hora}`;
+
+      window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(mensagem)}`, "_blank");
+    });
+  </script>
+</body>
+</html>
